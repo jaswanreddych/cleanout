@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "clean out the clutter, ship the code; one command your project is clean.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node src/index.js"
   },

@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
+import { error } from "./utils/logger.js"
 import { praseArgs } from "./utils/praseArgs.js"
 
 async function main() {
     const args = praseArgs(process.argv.slice(2))
-    console.log(args)
+    console.log("args", args)
 }
 
 main().catch(err => {
-    console.log(`\n[Cleanout]: Error running command ${err}\n`)
+    error(err.message)
     process.exit(1)
 })

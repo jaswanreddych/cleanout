@@ -1,0 +1,1 @@
+export const VALID_OUTPUT_FORMATS = ["json", "text"]
