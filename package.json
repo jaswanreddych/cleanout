@@ -1,6 +1,6 @@
 {
   "name": "cleanout",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "clean out the clutter, ship the code; one command your project is clean.",
   "main": "src/index.js",
   "type": "module",
