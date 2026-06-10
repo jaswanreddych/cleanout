@@ -31,6 +31,8 @@
   },
   "homepage": "https://github.com/jaswanreddych/cleanout#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "cleanout": "^1.0.1",
+    "express": "^5.2.1",
+    "g": "^2.0.1"
   }
 }

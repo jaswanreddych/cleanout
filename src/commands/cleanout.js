@@ -1,4 +1,4 @@
-import fs from "fs"
+import fsp from "fs/promises"
 import { c } from "../constants/color.js"
 import { getSize, scan } from "../utils/scanner.js"
 import { confirm, printDone, printDryRun, printEmptyMatches, printMatches, printStats, startSpinner } from "../utils/ui.js"
@@ -67,7 +67,7 @@ export async function cleanout(targetDir, config) {
     let space = 0
     for (const item of matches) {
         try {
-            fs.rmSync(item.path, { recursive: true, force: true })
+            await fsp.rm(item.path, { recursive: true, force: true })
             space += item.size
         } catch (error) {
             console.log(`${c.red}✖ failed to delete ${item.path}: ${error.message}${c.reset}`)
