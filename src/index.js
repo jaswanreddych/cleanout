@@ -4,6 +4,7 @@ import { cleanout } from "./commands/cleanout.js"
 import { getVersion, loadConfig } from "./utils/config.js"
 import { praseArgs } from "./utils/praseArgs.js"
 import { printVersion, printHelp, printBanner } from "./utils/ui.js"
+import { c } from "./constants/color.js"
 
 async function main() {
     const args = praseArgs(process.argv.slice(2))
