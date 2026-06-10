@@ -11,5 +11,5 @@ export const c = {
     error: "\x1b[31m",
     success: "\x1b[32m",
     info: "\x1b[33m",
-    warning: "\x1b[33m"
+    warning: "\x1b[33m",
 }
