@@ -1,0 +1,14 @@
+{
+  "dryRun": false,
+  "yes": false,
+  "depth": 5,
+  "include": [
+    "*.log",
+    "tmp",
+    ".cache"
+  ],
+  "exclude": [
+    "dist",
+    "important_logs"
+  ]
+}
