@@ -1,17 +1,17 @@
-import { VALID_OUTPUT_FORMATS } from "../constants/validOutputFormats.js"
 import { parseList, requireValue } from "./helper.js"
+import { VALID_OUTPUT_FORMATS } from "../constants/common.js"
 
 export function praseArgs(args) {
     const result = {
+        path: ".",
         dryRun: false,
         help: false,
         version: false,
         yes: false,
         stats: false,
         depth: Infinity,
-        add: [],
-        skip: [],
-        target: [],
+        include: [],
+        exclude: [],
         output: 'text',
     }
 
@@ -42,15 +42,12 @@ export function praseArgs(args) {
                 throw new Error("Invalid depth number");
             }
             result.depth = depth
-        } else if (arg.startsWith("--add") || arg.startsWith("-a")) {
-            const value = requireValue(arg, "Invalid skip path");
-            result.add.push(...parseList(value))
-        } else if (arg.startsWith("--skip") || arg.startsWith("-s")) {
-            const value = requireValue(arg, "Invalid skip path");
-            result.skip.push(...parseList(value))
-        } else if (arg.startsWith("--target") || arg.startsWith("-t")) {
-            const value = requireValue(arg, "Invalid target path");
-            result.target.push(...parseList(value))
+        } else if (arg.startsWith("--exclude") || arg.startsWith("-e")) {
+            const value = requireValue(arg, "Invalid exclude pattern");
+            result.exclude.push(...parseList(value))
+        } else if (arg.startsWith("--include") || arg.startsWith("-i")) {
+            const value = requireValue(arg, "Invalid include patterns");
+            result.include.push(...parseList(value))
         } else if (arg.startsWith("--output") || arg.startsWith("-o")) {
             const outputFormat = requireValue(
                 arg,
@@ -60,6 +57,8 @@ export function praseArgs(args) {
                 throw new Error(`Invalid output format ${outputFormat}.Use --help to see available options.`)
             }
             result.output = outputFormat
+        } else if (!arg.startsWith("-")) {
+            result.path = arg.trim()
         } else {
             throw new Error(`Invalid argument: ${arg}.Use --help to see available options.`)
         }
