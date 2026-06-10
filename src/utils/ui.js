@@ -30,12 +30,12 @@ export function printBanner() {
 }
 
 export function printVersion(version) {
-    printBanner()
-    console.log(`\t${c.bold}Version:${c.reset}  ${c.dim}${version}${c.reset}`)
+    // printBanner()
+    console.log(`${c.bold}Version:${c.reset}  ${c.dim}${version}${c.reset}`)
 }
 
 export function printHelp() {
-    printBanner();
+    // printBanner();
 
     console.log(`
 ${c.bold}Usage:${c.reset}
