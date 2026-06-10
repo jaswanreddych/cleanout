@@ -1,6 +1,6 @@
 import { parseList, requireValue } from "./helper.js"
 
-export function praseArgs(args) {
+export function parseArgs(args) {
     const result = {
         path: ".",
         dryRun: false,
@@ -34,10 +34,10 @@ export function praseArgs(args) {
         if (aliases[arg]) {
             result[aliases[arg]] = true
         } else if (arg.startsWith("--depth") || arg.startsWith("-d")) {
-            const value = requireValue(arg, "Invalid depth value")
-            const depth = Number(value)
+            const value = requireValue(arg.split("=")[1], "Invalid depth value")
+            const depth = parseInt(value, 10)
             if (!Number.isInteger(depth) || depth < 1) {
-                throw new Error("Invalid depth number");
+                throw new Error("Depth must be a positive integer");
             }
             result.depth = depth
         } else if (arg.startsWith("--exclude") || arg.startsWith("-e")) {
@@ -49,7 +49,7 @@ export function praseArgs(args) {
         } else if (!arg.startsWith("-")) {
             result.path = arg.trim()
         } else {
-            throw new Error(`Invalid argument: ${arg}.Use --help to see available options.`)
+            throw new Error(`Invalid argument: ${arg}. Use --help to see available options.`)
         }
     }
     return result

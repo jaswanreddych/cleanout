@@ -99,6 +99,7 @@ export function confirm(question) {
         process.stdin.setEncoding("utf8")
         process.stdin.once("data", (data) => {
             const answer = data.trim().toLowerCase()
+            process.stdin.pause()
             resolve(answer === "y" || answer === "yes")
         })
     })

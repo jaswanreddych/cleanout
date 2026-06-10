@@ -14,7 +14,7 @@ function requireValue(value, message) {
 
 function formatSize(bytes) {
     try {
-        if (!Number.isInteger(bytes) || bytes < 1) {
+        if (!Number.isInteger(bytes) || bytes < 0) {
             return "0 b"
         }
         const SIZES = ["b", "kb", "mb", "gb", "tb", "pb"]

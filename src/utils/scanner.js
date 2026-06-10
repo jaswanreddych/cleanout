@@ -40,7 +40,9 @@ async function searchDir(dir, matchers, depth, maxDepth) {
                 isDirectory: entry.isDirectory(),
                 category: matched.category,
                 pattern: matched.pattern,
+                color: matched.color
             });
+            continue;
         }
 
         if (entry.isDirectory()) {
@@ -88,17 +90,15 @@ export async function scan(targetDir, depth, include, exclude) {
 }
 
 export async function getSize(targetPath) {
-    let total = 0
     try {
         const stat = await fsp.stat(targetPath)
-        if (stat.isDirectory()) {
-            const files = await fsp.readdir(targetPath)
-            await Promise.all(files.map(async (file) => {
-                total += await getSize(path.join(targetPath, file))
-            }))
-        } else {
-            total += stat.size
-        }
-    } catch { }
-    return total
+        if (!stat.isDirectory()) return stat.size
+        const files = await fsp.readdir(targetPath)
+        const sizes = await Promise.all(
+            files.map(file => getSize(path.join(targetPath, file)))
+        )
+        return sizes.reduce((acc, s) => acc + s, 0)
+    } catch {
+        return 0
+    }
 }

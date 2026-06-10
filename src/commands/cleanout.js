@@ -51,10 +51,10 @@ export async function cleanout(targetDir, config) {
     }
 
     if (!yes) {
-        const confirmation = await confirm(`Are you sure you want to clean all the files and folders (${result.length})?`)
+        const confirmation = await confirm(`Are you sure you want to clean all the files and folders (${matches.length})?`)
         if (!confirmation) {
             console.log(`Operation cancelled (No files/folders are untouched) `)
-            process.exit(0)
+            return
         }
     }
 
@@ -69,5 +69,4 @@ export async function cleanout(targetDir, config) {
     }
 
     printDone(space)
-    process.exit(0)
 }

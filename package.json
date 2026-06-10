@@ -2,12 +2,32 @@
   "name": "cleanout",
   "version": "1.0.0",
   "description": "clean out the clutter, ship the code; one command your project is clean.",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
+  "bin": {
+    "cleanout": "src/index.js"
+  },
   "scripts": {
     "start": "node src/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT"
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "cli",
+    "clean",
+    "node_modules",
+    "build",
+    "cleanup"
+  ],
+  "author": "Jaswan Reddy Ch",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaswanreddych/cleanout"
+  },
+  "bugs": {
+    "url": "https://github.com/jaswanreddych/cleanout/issues"
+  },
+  "homepage": "https://github.com/jaswanreddych/cleanout#readme"
 }
