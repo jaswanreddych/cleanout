@@ -1,5 +1,4 @@
 import { parseList, requireValue } from "./helper.js"
-import { VALID_OUTPUT_FORMATS } from "../constants/common.js"
 
 export function praseArgs(args) {
     const result = {
@@ -12,7 +11,6 @@ export function praseArgs(args) {
         depth: Infinity,
         include: [],
         exclude: [],
-        output: 'text',
     }
 
     const aliases = {
@@ -43,20 +41,11 @@ export function praseArgs(args) {
             }
             result.depth = depth
         } else if (arg.startsWith("--exclude") || arg.startsWith("-e")) {
-            const value = requireValue(arg, "Invalid exclude pattern");
+            const value = requireValue(arg?.split("=")[1], "Invalid exclude pattern");
             result.exclude.push(...parseList(value))
         } else if (arg.startsWith("--include") || arg.startsWith("-i")) {
-            const value = requireValue(arg, "Invalid include patterns");
+            const value = requireValue(arg?.split("=")[1], "Invalid include patterns");
             result.include.push(...parseList(value))
-        } else if (arg.startsWith("--output") || arg.startsWith("-o")) {
-            const outputFormat = requireValue(
-                arg,
-                "Output format is required"
-            ).toLowerCase();
-            if (!(VALID_OUTPUT_FORMATS.includes(outputFormat))) {
-                throw new Error(`Invalid output format ${outputFormat}.Use --help to see available options.`)
-            }
-            result.output = outputFormat
         } else if (!arg.startsWith("-")) {
             result.path = arg.trim()
         } else {

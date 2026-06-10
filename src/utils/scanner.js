@@ -86,3 +86,19 @@ export async function scan(targetDir, depth, include, exclude) {
         depth
     );
 }
+
+export async function getSize(targetPath) {
+    let total = 0
+    try {
+        const stat = await fsp.stat(targetPath)
+        if (stat.isDirectory()) {
+            const files = await fsp.readdir(targetPath)
+            await Promise.all(files.map(async (file) => {
+                total += await getSize(path.join(targetPath, file))
+            }))
+        } else {
+            total += stat.size
+        }
+    } catch { }
+    return total
+}

@@ -1,5 +1,6 @@
-import { c } from "../constants/color.js"
-import { EXAMPLES, OPTIONS } from "../constants/common.js"
+import { c } from "../constants/color.js";
+import { EXAMPLES, OPTIONS } from "../constants/common.js";
+import { formatSize } from "./helper.js";
 
 function printOptions(options) {
     const pad = Math.max(...options.map(o => o.flags.length));
@@ -23,20 +24,15 @@ function printExamples(examples) {
 
 
 export function printBanner() {
-    console.log()
-    console.log(`\t${c.cyan}${c.bold}cleanout${c.reset}  ${c.gray}— clean out the clutter, ship the code; one command your project is clean.${c.reset}`)
-    console.log(`\t${c.gray}${'─'.repeat(85)}${c.reset}`)
-    console.log()
+    console.log(`\n\t${c.cyan}${c.bold}cleanout${c.reset}  ${c.gray}— clean out the clutter, ship the code; one command your project is clean.${c.reset}`)
+    console.log(`\t${c.gray}${'─'.repeat(85)}${c.reset}\n`)
 }
 
 export function printVersion(version) {
-    // printBanner()
     console.log(`${c.bold}Version:${c.reset}  ${c.dim}${version}${c.reset}`)
 }
 
 export function printHelp() {
-    // printBanner();
-
     console.log(`
 ${c.bold}Usage:${c.reset}
   cleanout ${c.yellow}[path] [options]${c.reset}
@@ -54,4 +50,60 @@ ${c.bold}Arguments:${c.reset}
 
     console.log(`\n${c.bold}Examples:${c.reset}`);
     printExamples(EXAMPLES);
+}
+
+export function printEmptyMatches() {
+    console.log(`${c.green}✔  Nothing found to clean!${c.reset}\n`)
+}
+
+function printCategory(group) {
+    const { category, items, color, total } = group
+    const noOfItems = items.length
+    console.log(`${color ?? c['white']}${category} (${noOfItems}) Total Size : ${formatSize(total)} ${c.reset}`)
+}
+
+function printItem(item) {
+    const { name, path, isDirectory, size } = item
+    const icon = isDirectory ? "📁" : "📄"
+    console.log(`   -> ${icon}  ${c.white}${name}${c.reset}${c.gray} (${formatSize(size)}) ${path}${c.reset}`)
+}
+
+
+function printTotal(total) {
+    console.log(`${c.bold}Total: ${c.reset} ${formatSize(total)}\n`)
+}
+
+export function printMatches(groupMatches, grandTotal) {
+    for (const group of groupMatches) {
+        printCategory(group)
+        console.log()
+        for (const item of group.items) {
+            printItem(item)
+        }
+        console.log()
+    }
+    printTotal(grandTotal)
+}
+
+export function printStats() {
+    console.log(`${c.green}This is report of scan (files or folder) found to clean up  ${c.reset}\n`)
+}
+
+export function printDryRun() {
+    console.log(`${c.green}DRY RUN - Completed (no files or folder are deleted) ${c.reset}\n`)
+}
+
+export function confirm(question) {
+    process.stdout.write(` ${c.white}${question}${c.reset} ${c.gray}(y/N)${c.reset} `)
+    return new Promise((resolve) => {
+        process.stdin.setEncoding("utf8")
+        process.stdin.once("data", (data) => {
+            const answer = data.trim().toLowerCase()
+            resolve(answer === "y" || answer === "yes")
+        })
+    })
+}
+
+export function printDone(space) {
+    console.log(`\n${c.green}${c.bold}✔  Done!${c.reset}  Total ${c.yellow}${formatSize(space)}${c.reset} freed`)
 }

@@ -18,11 +18,7 @@ export const EXAMPLES = [
     {
         cmd: "cleanout . --include=*.log,tmp",
         desc: "Include extra cleanup patterns",
-    },
-    {
-        cmd: "cleanout . --output=json",
-        desc: "Export results for CI/CD",
-    },
+    }
 ];
 
 export const OPTIONS = [
@@ -57,11 +53,5 @@ export const OPTIONS = [
     {
         flags: "-e, --exclude=<list>",
         desc: "Patterns to ignore (e.g. node_modules,build,vendor)",
-    },
-    {
-        flags: "-o, --output=<format>",
-        desc: "Output format (text | json, Default: text)",
-    },
+    }
 ];
-
-export const VALID_OUTPUT_FORMATS = ["json", "text"]
