@@ -108,3 +108,25 @@ export function confirm(question) {
 export function printDone(space) {
     console.log(`\n${c.green}${c.bold}✔  Done!${c.reset}  Total ${c.yellow}${formatSize(space)}${c.reset} freed`)
 }
+
+export function startSpinner(label) {
+    if (!process.stdout.isTTY) {
+        process.stdout.write(`  ${label}...\n`)
+        return { stop: () => { } }
+    }
+    const SPINNER_FRAMES = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
+    let i = 0
+    const interval = setInterval(() => {
+        const frame = SPINNER_FRAMES[i % SPINNER_FRAMES.length]
+        process.stdout.write(`\r  ${c.cyan}${frame}${c.reset} ${c.gray}${label}${c.reset}  `)
+        i++
+    }, 10)
+
+    return {
+        stop(finalMessage = '') {
+            clearInterval(interval)
+            process.stdout.write('\r' + ' '.repeat(label.length + 10) + '\r')
+            if (finalMessage) process.stdout.write(`  ${finalMessage}\n`)
+        },
+    }
+}

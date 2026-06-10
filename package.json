@@ -29,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/jaswanreddych/cleanout/issues"
   },
-  "homepage": "https://github.com/jaswanreddych/cleanout#readme"
+  "homepage": "https://github.com/jaswanreddych/cleanout#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
 }

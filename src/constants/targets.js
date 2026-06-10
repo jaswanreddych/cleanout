@@ -1,6 +1,6 @@
 export const DEFAULT_TARGETS = [
     {
-        "name": "node_modules",
+        "name": "Node Modules",
         "patterns": [
             "node_modules"
         ],

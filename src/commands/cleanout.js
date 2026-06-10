@@ -1,16 +1,20 @@
 import fs from "fs"
 import { c } from "../constants/color.js"
 import { getSize, scan } from "../utils/scanner.js"
-import { confirm, printDone, printDryRun, printEmptyMatches, printMatches, printStats } from "../utils/ui.js"
+import { confirm, printDone, printDryRun, printEmptyMatches, printMatches, printStats, startSpinner } from "../utils/ui.js"
 
 export async function cleanout(targetDir, config) {
     const { dryRun, yes, stats, depth, include, exclude } = config
+
+    const spinner = startSpinner("Collecting scan info from the directories (files or folders) to clean up")
 
     const matches = await scan(targetDir, depth, include, exclude)
 
     for (const item of matches) {
         item['size'] = await getSize(item.path)
     }
+
+    spinner.stop()
 
     if (!(matches.length)) {
         printEmptyMatches()
@@ -58,6 +62,8 @@ export async function cleanout(targetDir, config) {
         }
     }
 
+    const deleteSpinner = startSpinner("Deleting files and folders")
+
     let space = 0
     for (const item of matches) {
         try {
@@ -68,5 +74,6 @@ export async function cleanout(targetDir, config) {
         }
     }
 
+    deleteSpinner.stop()
     printDone(space)
 }
