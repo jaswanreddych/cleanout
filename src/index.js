@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
+import { cleanout } from "./commands/cleanout.js"
 import { getVersion, loadConfig } from "./utils/config.js"
-import { error } from "./utils/logger.js"
 import { praseArgs } from "./utils/praseArgs.js"
 import { printVersion, printHelp, printBanner } from "./utils/ui.js"
 
@@ -19,13 +19,11 @@ async function main() {
     }
 
     const targetDir = args.path !== "." ? path.resolve(args.path) : process.cwd()
-    console.log(`targetDir: ${targetDir}`)
-
     const config = await loadConfig(targetDir, args)
-    console.log(`config: ${JSON.stringify(config)}`)
+    await cleanout(targetDir, config)
 }
 
 main().catch(err => {
-    error(err.message)
+    console.log(`\n ${c.error} ${err.message} ${c.reset}\n`)
     process.exit(1)
 })
